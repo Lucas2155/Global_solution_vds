@@ -1,6 +1,6 @@
 type_instance = "t2.micro"
 
-key_ssh_name = "ec2-nagios"
+key_ssh_name = "ansible-lab-rapha"
 
 type_volume = "gp2"
 

@@ -6,7 +6,7 @@ resource "aws_subnet" "vpc-private-2" {
   availability_zone       = var.cloudit_APP_C
 
   tags = {
-    Name                                                   = "cloudit_APP_C_${var.ENV}"
+    Name                                                   = "sn_vpc_${var.nuvpc}_private"
     Terraform                                              = "true"
     Ambiente                                               = "${var.ENV}"
     APP                                                    = "cloudit"

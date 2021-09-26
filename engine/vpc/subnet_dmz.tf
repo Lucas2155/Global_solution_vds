@@ -5,7 +5,7 @@ resource "aws_subnet" "vpc-public-0" {
   availability_zone       = var.cloudit_DMZ_A
 
   tags = {
-    Name                                                   = "cloudit_DMZ_A_${var.ENV}"
+    Name                                                   = "sn_vpc_${var.nuvpc}_public"
     Terraform                                              = true
     Ambiente                                               = var.ENV
     APP                                                    = "cloudit"

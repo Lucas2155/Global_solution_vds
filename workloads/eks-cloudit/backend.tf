@@ -1,7 +1,8 @@
 terraform {
   backend "s3" {
     bucket = "cloudit-fiap-iac"
-    key    = "samdbox/iac/fiap/raphael/peering/peering.tfsate"
+    encrypt = true
+    key    = "iac/fiap/eks/select/eks-cloud-it.tfsatte"
     region = "us-east-1"
   }
 }

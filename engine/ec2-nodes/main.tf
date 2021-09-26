@@ -19,7 +19,7 @@ resource "aws_instance" "ec2-main" {
   #connection {
       #type        = "ssh"
       #user        = "ec2-user"
-      #private_key = file("~/.ssh/ec2-nagios.pem")
+      #private_key = file("~/.ssh/ansible-lab-rapha.pem")
      #host        = self.public_ip
     #}
   #provisioner "remote-exec" {
@@ -31,7 +31,7 @@ resource "aws_instance" "ec2-main" {
     #connection {
       #type        = "ssh"
       #user        = "ec2-user"
-      #private_key = file("~/.ssh/ec2-nagios.pem")
+      #private_key = file("~/.ssh/ansible-lab-rapha.pem")
      #host        = self.public_ip
     #}
   #}

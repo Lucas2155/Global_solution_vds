@@ -14,7 +14,7 @@ data "aws_subnet_ids" "vpc10" {
   vpc_id = data.aws_vpc.vpc10.id
   filter {
     name = "tag:Name"
-    values = ["cloudit_*"]
+    values = ["sn_vpc_*"]
   }
 }
 
@@ -40,7 +40,7 @@ data "aws_subnet_ids" "vpc20" {
   vpc_id = data.aws_vpc.vpc20.id
   filter {
     name = "tag:Name"
-    values = ["cloudit_*"]
+    values = ["sn_vpc_*"]
   }
 }
 

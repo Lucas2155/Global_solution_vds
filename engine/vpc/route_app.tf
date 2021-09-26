@@ -5,7 +5,7 @@ resource "aws_route_table" "route-app" {
     nat_gateway_id = aws_nat_gateway.nat-gw.id
   }
   tags = {
-    Name                             = "route_main_APP_${var.ENV}"
+    Name                             = "rt_vpc_${var.nuvpc}_private"
     Terraform                        = "true"
     Ambiente                         = var.ENV
     APP                              = "main"

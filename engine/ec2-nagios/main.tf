@@ -18,27 +18,53 @@ resource "aws_instance" "ec2-main" {
   connection {
       type        = "ssh"
       user        = "ec2-user"
-      private_key = file("~/.ssh/ec2-nagios.pem")
+      private_key = file("~/.ssh/ansible-lab-rapha.pem")
      host        = self.public_ip
     }
 
-  provisioner "remote-exec" {
-    inline = [
-      "sudo yum install -y unzip",
-      "unzip /tmp/conf.zip",
-      "sudo chmod 755 /home/ec2-user/conf/install.sh",
-      "sudo /home/ec2-user/conf/install.sh",
-      "sudo rm -rf /usr/local/nagios/etc/objects/localhost.cfg",
-      "sudo mv /home/ec2-user/conf/localhost.cfg /usr/local/nagios/etc/objects/localhost.cfg",
-      "sudo service nagios reload"
-    ]
-    connection {
-      type        = "ssh"
-      user        = "ec2-user"
-      private_key = file("~/.ssh/ec2-nagios.pem")
-     host        = self.public_ip
-    }
-  }
+ user_data = <<-EOF
+        #!/bin/bash
+        # Nagios Core Install Instructions
+        # https://support.nagios.com/kb/article/nagios-core-installing-nagios-core-from-source-96.html
+        yum update -y
+        setenforce 0
+        cd /tmp
+        yum install -y gcc glibc glibc-common make gettext automake autoconf wget openssl-devel net-snmp net-snmp-utils epel-release
+        yum install -y perl-Net-SNMP
+        yum install -y unzip httpd php gd gd-devel perl postfix
+        cd /tmp
+        wget -O nagioscore.tar.gz https://github.com/NagiosEnterprises/nagioscore/archive/nagios-4.4.5.tar.gz
+        tar xzf nagioscore.tar.gz
+        cd /tmp/nagioscore-nagios-4.4.5/
+        ./configure
+        make all
+        make install-groups-users
+        usermod -a -G nagios apache
+        make install
+        make install-daemoninit
+        systemctl enable httpd.service
+        make install-commandmode
+        make install-config
+        make install-webconf
+        iptables -I INPUT -p tcp --destination-port 80 -j ACCEPT
+        ip6tables -I INPUT -p tcp --destination-port 80 -j ACCEPT
+        htpasswd -b -c /usr/local/nagios/etc/htpasswd.users nagiosadmin nagiosadmin
+        service httpd start
+        service nagios start
+        cd /tmp
+        wget --no-check-certificate -O nagios-plugins.tar.gz https://github.com/nagios-plugins/nagios-plugins/archive/release-2.2.1.tar.gz
+        tar zxf nagios-plugins.tar.gz
+        cd /tmp/nagios-plugins-release-2.2.1/
+        ./tools/setup
+        ./configure
+        make
+        make install
+        service nagios restart
+        echo done > /tmp/nagioscore.done
+        rm -rf /usr/local/nagios/etc/objects/localhost.cfg
+        mv /home/ec2-user/conf/localhost.cfg /usr/local/nagios/etc/objects/localhost.cfg
+        service nagios reload
+	      EOF
    tags = {
     Name = var.tag
   }

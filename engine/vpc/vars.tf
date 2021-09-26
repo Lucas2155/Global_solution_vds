@@ -53,3 +53,7 @@ variable "cluster-name" {
     type    = string
 
 }
+
+variable "nuvpc" {
+  type = string
+}

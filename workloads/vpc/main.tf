@@ -12,8 +12,9 @@ module "vpca"{
         enable_dns_hostnames = "true"
         enable_classiclink = "false"
         name_vpc = "vpc10"
-        ENV = "vpc10"
-        cluster-name = "vpc10"
+        ENV = "sandbox"
+        cluster-name = "cloudit"
+        nuvpc= "10"
 }
 
 module "vpcb"{
@@ -30,8 +31,10 @@ module "vpcb"{
         enable_dns_hostnames = "true"
         enable_classiclink = "false"
         name_vpc = "vpc20"
-        ENV = "vpc20"
-        cluster-name = "vpc10"
+        ENV = "sandbox"
+        cluster-name = "cloudit"
+        nuvpc= "20"
+
 }
 
 

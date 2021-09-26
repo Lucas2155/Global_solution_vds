@@ -8,7 +8,7 @@ data "aws_subnet_ids" "vpc10" {
   vpc_id = data.aws_vpc.vpc10.id
   filter {
     name = "tag:Name"
-    values = ["cloudit_*"]
+    values = ["sn_vpc_*"]
   }
 }
 
@@ -23,7 +23,7 @@ data "aws_subnet_ids" "vpc20" {
   vpc_id = data.aws_vpc.vpc20.id
   filter {
     name = "tag:Name"
-    values = ["cloudit_*"]
+    values = ["sn_vpc_*"]
   }
 }
 
@@ -51,7 +51,7 @@ module "nagios" {
   type_volume        = var.type_volume
   size_volume        = var.size_volume
   del_on_termination = var.del_on_termination
-  private_ip         = "10.0.1.156"
+  private_ip         = "10.0.1.45" 
   vpc_security_group_ids = [module.sg_nagios.sgoutput]
   subnet_id          = tolist(data.aws_subnet_ids.vpc10.ids)[0]
   tag                = "Nagios"

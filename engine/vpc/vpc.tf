@@ -21,7 +21,7 @@ resource "aws_internet_gateway" "vpc-gw" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name                             = "igw_${var.ENV}"
+    Name                             = "igw_${var.nuvpc}"
     Terraform                        = "true"
     Ambiente                         = var.ENV
     APP                              = "main"

@@ -7,7 +7,7 @@ resource "aws_route_table" "route-dmz" {
   }
 
   tags = {
-    Name       = "route_cloudit_DMZ_${var.ENV}"
+    Name       = "rt_vpc_${var.nuvpc}_public"
     Terraform  = "true"
     Ambiente   = "${var.ENV}"
     APP        = "cloudit"
